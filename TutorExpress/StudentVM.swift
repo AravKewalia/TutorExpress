@@ -46,7 +46,7 @@ class StudentVM: ObservableObject {
             let role = data["role"] as? String ?? ""
             let age = data["age"] as? String ?? ""
             let grade = data["grade"] as? String ?? ""
-            let phoneNum = data["phoneNumber"] as? String ?? ""
+            let phoneNum = data["phoneNum"] as? String ?? ""
             let tutorName = data["tutor name"] as? String ?? ""
             let tutorUID = data["tutor uid"] as? String ?? ""
             

@@ -205,7 +205,7 @@ struct RegisterLogin: View {
                      
                     Button {
                         loginUser()
-                        
+                        return;
                         }
                      label: {
                         HStack {
@@ -248,7 +248,6 @@ struct RegisterLogin: View {
             
             self.StatusMessage = "Successfully logged in as user: \(result?.user.uid ?? "")"
             
-            self.isUserCurrentlyLoggedOut = true
             
             let db = Firestore.firestore()
             let docRef = db.collection("users").document(result?.user.uid ?? "")
@@ -265,20 +264,21 @@ struct RegisterLogin: View {
                         self.roles = data["role"] as? String ?? ""
                         print(roles)
                         if(roles == "Student") {
-                            student = true
+                            self.student = true
                         }
                         else if (roles == "Tutor") {
-                            student = false
-                            
-                        
+                            self.student = false
                         }
+                        print(roles)
+                        print(self.student)
+                        self.isUserCurrentlyLoggedOut = true
+
                     }
                 }
             }
             
         }
         
-       
     }
                                                
                                                
@@ -326,7 +326,7 @@ struct RegisterLogin: View {
     private func storeUserInformation() {
         if(role == "Student") {
             guard let uid = Auth.auth().currentUser?.uid else { return }
-            let userData = ["fname": self.fname, "lname": self.lname, "email": self.email, "age": self.age, "phoneNumber": self.phoneNumber, "role": self.role, "grade": self.grade, "uid": uid, "tutor name": "none", "tutor uid": "none"]
+            let userData = ["fname": self.fname, "lname": self.lname, "email": self.email, "age": self.age, "phoneNum": self.phoneNumber, "role": self.role, "grade": self.grade, "uid": uid, "tutor name": "none", "tutor uid": "none"]
             Firestore.firestore().collection("users")
                 .document(uid).setData(userData) { err in
                     if let err = err {
