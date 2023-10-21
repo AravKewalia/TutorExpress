@@ -15,6 +15,7 @@ struct StudentHomepage: View {
     @State var shouldShowLogOutOptions = false
     @ObservedObject private var vm = MainMessagesViewModel()
     @Binding var isUserCurrentlyLoggedOut : Bool
+    @Binding var student: Bool
     
     @State var index = 0
     
@@ -117,6 +118,7 @@ struct StudentHomepage: View {
                                 print("handle sign out")
                                 try? Auth.auth().signOut()
                                 self.isUserCurrentlyLoggedOut = false
+                                self.student = false
                             }.font(.headline)
                                 .padding(50)
                                 .background(Color.teal)
@@ -137,7 +139,8 @@ struct StudentHomepage: View {
 
 struct StudentHomepage_Previews: PreviewProvider {
     @State static var isUserCurrentlyLoggedOut = false
+    @State static var student = false
     static var previews: some View {
-        StudentHomepage(isUserCurrentlyLoggedOut: $isUserCurrentlyLoggedOut)
+        StudentHomepage(isUserCurrentlyLoggedOut: $isUserCurrentlyLoggedOut, student: $student)
     }
 }
