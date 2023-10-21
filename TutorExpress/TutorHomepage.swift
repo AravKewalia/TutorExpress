@@ -14,6 +14,7 @@ struct TutorHomepage: View {
     let db = Firestore.firestore()
     @State var shouldShowLogOutOptions = false
     @Binding var isUserCurrentlyLoggedOut : Bool
+    @Binding var student: Bool
     
     @State var index = 0
     @ObservedObject private var viewModel = studentPosts()
@@ -108,6 +109,7 @@ struct TutorHomepage: View {
                                 print("handle sign out")
                                 try? Auth.auth().signOut()
                                 self.isUserCurrentlyLoggedOut = false
+                                self.student = false
                             }.font(.headline).bold()
                                 .padding(50)
                                 .background(Color.teal)
@@ -128,7 +130,8 @@ struct TutorHomepage: View {
 
 struct TutorHomepage_Previews: PreviewProvider {
     @State static var isUserCurrentlyLoggedOut = false
+    @State static var student = false
     static var previews: some View {
-        TutorHomepage(isUserCurrentlyLoggedOut: $isUserCurrentlyLoggedOut)
+        TutorHomepage(isUserCurrentlyLoggedOut: $isUserCurrentlyLoggedOut, student : $student)
     }
 }

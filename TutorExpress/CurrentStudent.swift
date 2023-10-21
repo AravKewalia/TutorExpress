@@ -58,6 +58,17 @@ struct CurrentStudent: View {
                     }
                     Spacer()
                     VStack{
+                        Text("Current Student's Phone Number").bold().font(.headline).padding(50)
+                            .background(Color.blue)
+                            .foregroundColor(Color.green)
+                            .cornerRadius(10).frame(width: 400, height: 150)
+                        Text(vm.chatUser?.phoneNum ?? "none").bold().font(.subheadline).padding(20)
+                            .background(Color.blue)
+                            .foregroundColor(Color.green)
+                            .cornerRadius(10).frame(width: 200, height: 150)
+                    }
+                    Spacer()
+                    VStack{
                         Text("Current Student's Age").bold().font(.headline).padding(50)
                             .background(Color.blue)
                             .foregroundColor(Color.green)

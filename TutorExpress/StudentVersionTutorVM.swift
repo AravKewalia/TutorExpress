@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
  
 struct studentVersionChatUser {
-    let uid, email, fname, lname, role, credentials: String
+    let uid, email, fname, lname, role, phoneNum, credentials: String
 }
  
 class StudentVersionTutorVM: ObservableObject {
@@ -43,11 +43,12 @@ class StudentVersionTutorVM: ObservableObject {
             let email = data["email"] as? String ?? ""
             let fname = data["fname"] as? String ?? ""
             let lname = data["lname"] as? String ?? ""
+            let phoneNum = data["phoneNumber"] as? String ?? ""
             let role = data["role"] as? String ?? ""
             let credentials = data["credentials"] as? String ?? ""
             
             print(lname)
-            self.chatUser = studentVersionChatUser(uid: uid, email: email, fname: fname, lname: lname, role: role, credentials: credentials)
+            self.chatUser = studentVersionChatUser(uid: uid, email: email, fname: fname, lname: lname, role: role, phoneNum: phoneNum, credentials: credentials)
              
             
         }
