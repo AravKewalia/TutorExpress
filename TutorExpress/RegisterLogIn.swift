@@ -14,6 +14,7 @@ struct RegisterLogin: View {
     @State var fname = ""
     @State var lname = ""
     @State var role = "Student or Tutor"
+    @State var phoneNumber = ""
     
     //Student Specific
     @State var grade = ""
@@ -38,7 +39,8 @@ struct RegisterLogin: View {
         ScrollView {
  
             VStack(spacing: 16) {
-                Text("Tutor-").bold().foregroundColor(Color.white).font(Font.title) + Text("X").bold().foregroundColor(Color.black).font(Font.title).italic() + Text("Press").bold().foregroundColor(Color.white).font(Font.title)
+                Text("Tutor-").bold().foregroundColor(Color.white).font(Font.title) + Text("X").bold().foregroundColor(Color.black
+                ).font(Font.title).italic() + Text("Press").bold().foregroundColor(Color.white).font(Font.title)
 
                 Picker(selection: $isLoginMode, label: Text("Picker here")) {
                     Text("Login")
@@ -63,6 +65,9 @@ struct RegisterLogin: View {
                         TextField("Last Name", text: $lname)
                         TextField("Email", text: $email)
                             .keyboardType(.emailAddress)
+                            .autocapitalization(.none)
+                        TextField("Phone Number", text: $phoneNumber)
+                            .keyboardType(.default)
                             .autocapitalization(.none)
                         SecureField("Password", text: $password)
                         Menu {
@@ -264,6 +269,8 @@ struct RegisterLogin: View {
                         }
                         else if (roles == "Tutor") {
                             student = false
+                            
+                        
                         }
                     }
                 }
@@ -319,7 +326,7 @@ struct RegisterLogin: View {
     private func storeUserInformation() {
         if(role == "Student") {
             guard let uid = Auth.auth().currentUser?.uid else { return }
-            let userData = ["fname": self.fname, "lname": self.lname, "email": self.email, "age": self.age, "role": self.role, "grade": self.grade, "uid": uid, "tutor name": "none", "tutor uid": "none"]
+            let userData = ["fname": self.fname, "lname": self.lname, "email": self.email, "age": self.age, "phoneNumber": self.phoneNumber, "role": self.role, "grade": self.grade, "uid": uid, "tutor name": "none", "tutor uid": "none"]
             Firestore.firestore().collection("users")
                 .document(uid).setData(userData) { err in
                     if let err = err {
@@ -333,7 +340,7 @@ struct RegisterLogin: View {
         }
         else if (role == "Tutor") {
             guard let uid = Auth.auth().currentUser?.uid else { return }
-            let userData = ["role": self.role, "fname": self.fname, "lname": self.lname, "email": self.email, "subject": self.subject, "credentials": self.credentials, "uid": uid, "student name": "none", "student uid": "none"]
+            let userData = ["role": self.role, "fname": self.fname, "lname": self.lname, "phoneNum": self.phoneNumber, "email": self.email, "subject": self.subject, "credentials": self.credentials, "uid": uid, "student name": "none", "student uid": "none"]
             Firestore.firestore().collection("users")
                 .document(uid).setData(userData) { err in
                     if let err = err {
@@ -350,6 +357,7 @@ struct RegisterLogin: View {
         self.lname = ""
         self.email = ""
         self.password = ""
+        self.phoneNumber = ""
         self.age = "Age (Must be between 5 and 21)"
         self.grade = "Grade (Must be between 1 and 12)"
         self.subject = ""
